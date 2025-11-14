@@ -1,4 +1,4 @@
-# telegram-verify-bot
+# Telegram-verify-bot
 
 一个基于 Cloudflare Workers 的 Telegram 消息转发机器人，集成了数学验证、反欺诈和用户管理功能。
 
@@ -38,7 +38,7 @@
 #### 3️⃣ 在 Cloudflare 创建 Worker
 
 1. 登录 [Cloudflare Dashboard](https://dash.cloudflare.com)
-2. 进入 **Workers & Pages** → **Create** → **Create Worker**
+2. 进入 **Workers & Pages** → **Create application** → **Start with Hello World!**
 3. 给 Worker 命名（如 `telegram-verify-bot`）
 4. 点击 **Deploy**
 
@@ -54,22 +54,21 @@
 
 #### 5️⃣ 绑定 KV 数据库
 
-1. 在 **Settings** → **KV Namespace Bindings** 中
+1. 进入 **Workers KV**
 2. 创建新的 KV 命名空间：`nfd`
-3. 设置绑定：`nfd` → `nfd`
+3. 在 Worker 设置中，进入 **Bindings** → **Variables** → **Add binding**，命名Variable name：`nfd`， 设置KV namespace绑定：`nfd`
 
 #### 6️⃣ 部署代码
 
-1. 进入 **Worker Quick Edit**
-2. 复制本项目代码到编辑器
-3. 点击 **Save and Deploy**
+1. 进入 **Worker Edit code**
+2. 复制本项目worker.js代码到编辑器
+3. 点击 **Deploy**
 
 #### 7️⃣ 注册 Webhook
 
 访问以下 URL 注册 webhook（替换 `xxx.workers.dev` 为你的 Worker 域名）：
 
 https://xxx.workers.dev/registerWebhook
-
 
 成功后将看到 `Ok` 响应。
 
@@ -137,6 +136,7 @@ https://xxx.workers.dev/registerWebhook
 ```javascript
 const enable_notification = true;
 ```
+
 启用后，每次用户发送消息超过 1 天后会触发一次通知。
 
 ## 🔍 反欺诈数据库
