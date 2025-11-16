@@ -486,6 +486,7 @@ telegram-verify-bot/
 
 有问题或建议？
 
+- ✈️ 联系我[Squarelan](https://t.me/Squarelan)
 - 📮 提交 Issue
 - 💭 开启讨论区
 - 🔗 提交 Pull Request
