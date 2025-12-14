@@ -50,7 +50,7 @@ function generateMathProblem() {
   const answer = `${result1}${result2}`;
   
   // ✨ 改进 2：隐藏具体时间，只显示"上海时间"提示
-  const question = `🔐 以上海时间为基准\n\n第${pos1 + 1}位数字 + ${addValue1} = ?\n第${pos2 + 1}位数字 + ${addValue2} = ?\n\n按顺序组成两位数即为答案`;
+  const question = `以UTC+8时间的 时分（HHMM格式，仅数字）四位数字的\n\n第${pos1 + 1}位数字 + ${addValue1} = ?\n第${pos2 + 1}位数字 + ${addValue2} = ?\n\n按顺序组成两位数即为答案`;
   
   return { 
     question: question, 
