@@ -46,7 +46,7 @@ function generateMathProblem() {
   const answer = result1.toString() + result2.toString();
   
   // 问题显示
-  const question = `🔐 时间: ${timeObj.hour}:${timeObj.minute}:${timeObj.second}\n第${pos1 + 1}位数字(${digit1}) + ${addValue} = ${digit1 + addValue} → ${result1}\n第${pos2 + 1}位数字(${digit2}) + ${addValue} = ${digit2 + addValue} → ${result2}\n\n答案是多少?`;
+  const question = `🔐 以当前时间: ${timeObj.hour}:${timeObj.minute}:${timeObj.second} 为基准\n\n第${pos1 + 1}位数字 + ${addValue} = ?\n第${pos2 + 1}位数字 + ${addValue} = ?\n\n按顺序组成两位数即为答案`;
   
   return { 
     question: question, 
