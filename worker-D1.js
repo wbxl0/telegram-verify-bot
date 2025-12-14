@@ -81,7 +81,6 @@ function initConfig(env) {
   SECRET = env.BOT_SECRET;
   ADMIN_UID = env.ADMIN_UID;
   WEBHOOK = '/endpoint';
-  lan = env.lan;
   TIMEZONE = env.TIMEZONE || 'UTC';  // ✨ 新增：读取时区配置，默认 UTC
   
   if (!TOKEN || !SECRET || !ADMIN_UID) {
