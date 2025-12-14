@@ -484,35 +484,38 @@ async function handleGuestMessage(message) {
     const verified = await lan.get('verified-' + chatId);
     if (!verified) {
       const expected = await lan.get('verify-' + chatId);
-
+    
+      // ✨ 如果没有进行中的验证，才生成新题
       if (!expected) {
         const { question, answer } = generateMathProblem();
-        await lan.put('verify-' + chatId, answer, { expirationTtl: VERIFICATION_TTL });  // ✅ 5分钟过期
-        await lan.put('verify-attempts-' + chatId, '0', { expirationTtl: VERIFICATION_TTL });  // ✅ 5分钟过期
-
+        await lan.put('verify-' + chatId, answer, { expirationTtl: VERIFICATION_TTL });
+        await lan.put('verify-attempts-' + chatId, '0', { expirationTtl: VERIFICATION_TTL });
+    
         const options = generateOptions(parseInt(answer));
-
+        const formattedOptions = options.map(opt => String(opt).padStart(2, '0'));
+    
         const keyboard = {
           inline_keyboard: [
             [
-              { text: options[0], callback_data: `verify_${options[0]}_${answer}` },
-              { text: options[1], callback_data: `verify_${options[1]}_${answer}` },
-              { text: options[2], callback_data: `verify_${options[2]}_${answer}` }
+              { text: formattedOptions[0], callback_data: `verify_${formattedOptions[0]}_${answer}` },
+              { text: formattedOptions[1], callback_data: `verify_${formattedOptions[1]}_${answer}` },
+              { text: formattedOptions[2], callback_data: `verify_${formattedOptions[2]}_${answer}` }
             ],
             [
-              { text: options[3], callback_data: `verify_${options[3]}_${answer}` },
-              { text: options[4], callback_data: `verify_${options[4]}_${answer}` },
-              { text: options[5], callback_data: `verify_${options[5]}_${answer}` }
+              { text: formattedOptions[3], callback_data: `verify_${formattedOptions[3]}_${answer}` },
+              { text: formattedOptions[4], callback_data: `verify_${formattedOptions[4]}_${answer}` },
+              { text: formattedOptions[5], callback_data: `verify_${formattedOptions[5]}_${answer}` }
             ]
           ]
         };
-
+    
         return sendMessage({
           chat_id: chatId,
           text: `🔐 请回答以下问题以验证你不是机器人：\n\n${question} = ?`,
           reply_markup: keyboard
         });
       } else {
+        // ✨ 已有进行中的验证，提示用户继续答题
         return sendMessage({
           chat_id: chatId,
           text: '请点击上面的按钮选择答案'
@@ -548,19 +551,20 @@ async function handleGuestMessage(message) {
  * 生成六个选项（包含正确答案）
  */
 function generateOptions(correctAnswer) {
+  // ✨ 确保输入范围在 0-99
+  correctAnswer = Math.max(0, Math.min(99, correctAnswer));
+  
   const options = [correctAnswer];
   
   while (options.length < 6) {
-    // 生成干扰项
-    let wrongAnswer = correctAnswer + Math.floor(Math.random() * 20) - 10;
+    // 生成 0-99 范围内的错误答案
+    let wrongAnswer = Math.floor(Math.random() * 100);
     
-    // 确保干扰项不重复且不等于正确答案
-    if (wrongAnswer !== correctAnswer && !options.includes(wrongAnswer) && wrongAnswer > 0) {
+    if (wrongAnswer !== correctAnswer && !options.includes(wrongAnswer)) {
       options.push(wrongAnswer);
     }
   }
   
-  // 打乱顺序
   return options.sort(() => Math.random() - 0.5);
 }
 
