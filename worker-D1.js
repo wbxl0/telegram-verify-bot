@@ -338,7 +338,7 @@ async function onMessage(message) {
   if (message.text === '/start') {
     return sendMessage({
       chat_id: message.chat.id,
-      text: '你好，这是我的聊天机器人，请通过验证后和我聊天，聊天消息会转发给我。\n\nBot Created Via @Squarelan'
+      text: '你好，这是我的聊天机器人，请通过验证后和我聊天，聊天消息会转发给我。'
     });
   }
 
